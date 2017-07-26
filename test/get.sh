@@ -359,7 +359,20 @@ it_can_get_committer_email() {
 
   test -e $dest/.git/committer || echo ".git/committer does not exist."
   test "$(cat $dest/.git/committer)" = $committer_email || echo "Committer email not found."
+}
 
+it_can_get_latest_commit_date() {
+  local repo=$(init_repo)
+  local ref=$(make_commit $repo)
+  local dest=$TMPDIR/destination
+  local commit_date=$(cd $repo; git --no-pager log -1 --date=local --pretty=format:"%cd")
+
+  get_uri $repo $dest | jq -e "
+    .version == {ref: $(echo $ref | jq -R .)}
+  "
+
+  test -e $dest/.git/last_commit_date || echo ".git/last_commit_date does not exist."
+  test "$(cat $dest/.git/last_commit_date)" = "$commit_date" || echo "Wrong commit date."
 }
 
 run it_can_get_from_url
@@ -384,3 +397,4 @@ run it_cant_get_signed_commit_when_using_keyserver_and_unknown_key_id
 run it_can_get_signed_commit_when_using_keyserver
 run it_can_get_signed_commit_via_tag
 run it_can_get_committer_email
+run it_can_get_latest_commit_date
