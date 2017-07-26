@@ -116,6 +116,11 @@ done
 # Using https://github.com/mdomke/concourse-email-resource for example
 git --no-pager log -1 --pretty=format:"%ae" > .git/committer
 
+# Store last commit infos
+git tag --points-at HEAD > .git/last_commit_tag
+git --no-pager log -1 --pretty=format:"%h" > .git/last_commit
+git --no-pager log -1 --date=local --pretty=format:"%cd" > .git/last_commit_date
+
 if [ "$ref" == "HEAD" ]; then
   return_ref=$(git rev-parse HEAD)
 else
