@@ -1,3 +1,5 @@
+[![Docker Repository on Quay](https://quay.io/repository/buildo/concourse-git-resource/status?token=ae6bf66d-d2e9-49f4-b07d-dba75452da3c "Docker Repository on Quay")](https://quay.io/repository/buildo/concourse-git-resource)
+
 # Git Resource
 
 Tracks the commits in a [git](http://git-scm.com/) repository.
